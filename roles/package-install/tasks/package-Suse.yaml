@@ -8,6 +8,7 @@
     oldpackage: yes
     update_cache: yes
     force: yes
+    disable_gpg_check: true
   retries: 5
   delay: 60
 
