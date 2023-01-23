@@ -1,10 +1,10 @@
 ---
 
 # name of a file reflecting container OS version
-- name: install infra-agent Zypper repository
+- name: Setup Zypper repository
   zypper_repository:
-    name: newrelic-infra
-    description: New Relic Infrastructure Agent
+    name: "{{ package_name }}"
+    description: Molecule packaging tests
     repo: "{{ repo_endpoint }}/linux/zypp/sles/{{ansible_distribution_version}}/{{ansible_machine}}/"
     runrefresh: yes
     auto_import_keys: yes

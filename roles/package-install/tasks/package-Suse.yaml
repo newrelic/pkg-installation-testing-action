@@ -1,7 +1,6 @@
 ---
 
-- name: zypper install infra-agent
-  environment: "{{ env_vars }}"
+- name: Zypper package installation
   zypper:
     name: "{{ package_name }}={{ target_agent_version }}"
     state: present

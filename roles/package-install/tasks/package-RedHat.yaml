@@ -1,7 +1,6 @@
 ---
 
-- name: Install infra-agent yum
-  environment: "{{ env_vars }}"
+- name: Yum package installation
   yum:
     name: "{{ package_name }}-{{ target_agent_version }}"
     update_cache: yes
@@ -9,8 +8,7 @@
   delay: 60
   when: not "python3" in ansible_python_interpreter
 
-- name: Install infra-agent dnf
-  environment: "{{ env_vars }}"
+- name: Dnf package installation
   dnf:
     name: "{{ package_name }}-{{ target_agent_version }}"
     update_cache: yes

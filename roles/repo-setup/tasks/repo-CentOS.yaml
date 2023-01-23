@@ -1,9 +1,9 @@
 ---
 
-- name: install infra-agent YUM repository
+- name: Setup YUM repository
   yum_repository:
-    name: newrelic-infra
-    description: New Relic Infrastructure Agent
+    name: "{{ package_name }}"
+    description: Molecule packaging tests
     baseurl: "{{ repo_endpoint }}/linux/yum/el/$releasever/$basearch"
     gpgkey: http://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
     gpgcheck: no

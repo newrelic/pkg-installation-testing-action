@@ -1,9 +1,9 @@
 ---
 
-- name: install infra-agent YUM repository
+- name: Setup YUM repository
   yum_repository:
-    name: newrelic-infra
-    description: New Relic Infrastructure Agent
+    name: "{{ package_name }}"
+    description: Molecule packaging tests
     # $releasever var cannot be used as RHEL7 will replace it with 7Server instead of 7.
     baseurl: "{{ repo_endpoint }}/linux/yum/el/{{ ansible_distribution_major_version }}/$basearch"
     gpgkey: http://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg

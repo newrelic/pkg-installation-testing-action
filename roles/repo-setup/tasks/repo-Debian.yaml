@@ -1,10 +1,10 @@
 ---
 
-- name: install infra-agent APT key
+- name: Setup newrelic infra APT key
   apt_key:
     url: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
 
-- name: install infra-agent APT repository
+- name: Setup APT repository
   apt_repository:
     repo: "deb {{ repo_endpoint }}/linux/apt {{ ansible_distribution_release }} main"
     filename: newrelic-infra
