@@ -3,7 +3,7 @@
 - name: zypper install infra-agent
   environment: "{{ env_vars }}"
   zypper:
-    name: "{{ package_name }}"
+    name: "{{ package_name }}={{ target_agent_version }}"
     state: present
     oldpackage: yes
     update_cache: yes

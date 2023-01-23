@@ -3,9 +3,8 @@
 - name: apt install infra-agent
   environment: "{{ env_vars }}"
   apt:
-    name: "{{ package_name }}"
+    name: "{{ package_name }}={{ target_agent_version }}"
     update_cache: no #ubuntu 20.10 image has broken repos. Cache will only be updated after NR repo is added
   retries: 5
   delay: 60
-    
 ...
