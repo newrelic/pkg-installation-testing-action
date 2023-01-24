@@ -12,10 +12,7 @@
         - name: Repo setup
           include_role:
             name: repo-setup
-        - name: Install agent
-          include_role:
-            name: package-install
-        - name: Install agent
+        - name: Install package
           include_role:
             name: package-install
         - name: Assert version
@@ -23,7 +20,7 @@
             name: assert-version
       rescue:
         - debug: msg="suse requires to install the package twice"
-        - name: Install agent
+        - name: Install package
           include_role:
             name: package-install
         - name: Assert version
