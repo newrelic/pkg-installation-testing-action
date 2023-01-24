@@ -5,7 +5,7 @@
     - name: Installation tests suite
       vars:
         repo_endpoint: "{{ lookup('env', 'REPO_BASE_URL') }}"
-        target_agent_version: "{{ lookup('env', 'EXPECTED_PACKAGE_VERSION') }}"
+        package_version: "{{ lookup('env', 'PACKAGE_VERSION') }}"
         package_name: "{{ lookup('env', 'PACKAGE_NAME') }}"
 
       block:

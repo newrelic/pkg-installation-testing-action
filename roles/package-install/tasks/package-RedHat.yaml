@@ -2,7 +2,7 @@
 
 - name: Yum package installation
   yum:
-    name: "{{ package_name }}-{{ target_agent_version }}"
+    name: "{{ package_name }}-{{ package_version }}"
     update_cache: yes
   retries: 5
   delay: 60
@@ -10,7 +10,7 @@
 
 - name: Dnf package installation
   dnf:
-    name: "{{ package_name }}-{{ target_agent_version }}"
+    name: "{{ package_name }}-{{ package_version }}"
     update_cache: yes
   retries: 5
   delay: 60

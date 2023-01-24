@@ -2,7 +2,7 @@
 
 - name: Zypper package installation
   zypper:
-    name: "{{ package_name }}={{ target_agent_version }}"
+    name: "{{ package_name }}={{ package_version }}"
     state: present
     oldpackage: yes
     update_cache: yes

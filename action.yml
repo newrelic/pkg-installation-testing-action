@@ -5,7 +5,7 @@ inputs:
     description: 'base url to the rpm/yum/apt repository of NR'
   package_name:
     description: 'name of a package'
-  expected_package_version:
+  package_version:
     description: 'version of a package that should be installed'
   gpg_key:
     description: 'gpg key to verify package signatures'
@@ -39,7 +39,7 @@ runs:
       env:
         REPO_BASE_URL: ${{ inputs.repo_base_url }}
         PACKAGE_NAME: ${{ inputs.package_name }}
-        EXPECTED_PACKAGE_VERSION: ${{ inputs.expected_package_version }}
+        PACKAGE_VERSION: ${{ inputs.package_version }}
         GPG_KEY: ${{ inputs.gpg_key }}
       run: "cd ${GITHUB_ACTION_PATH} && molecule converge"
     - name: Teardown
