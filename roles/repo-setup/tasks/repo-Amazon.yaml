@@ -5,7 +5,7 @@
     name: "{{ package_name }}"
     description: Molecule packaging tests
     baseurl: "{{ repo_endpoint }}/linux/yum/amazonlinux/{{ ansible_distribution_major_version }}/$basearch"
-    gpgkey: http://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    gpgkey: "{{ gpg_key }}"
     gpgcheck: no
     repo_gpgcheck: no
 

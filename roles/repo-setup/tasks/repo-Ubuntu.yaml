@@ -2,7 +2,7 @@
 
 - name: Install infra APT key
   apt_key:
-    url: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    url: "{{ gpg_key }}"
 
 - debug: var=repo_endpoint
 

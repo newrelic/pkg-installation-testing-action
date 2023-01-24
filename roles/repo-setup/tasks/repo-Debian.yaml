@@ -2,7 +2,7 @@
 
 - name: Setup newrelic infra APT key
   apt_key:
-    url: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    url: "{{ gpg_key }}"
 
 - name: Setup APT repository
   apt_repository:
