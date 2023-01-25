@@ -6,16 +6,41 @@ jobs:
   molecule-packaging-tests:
     name: Launch molecule tests with infra-agent package
     runs-on: ubuntu-20.04
-    env:
-      TESTING: 'true'
+    strategy:
+      matrix:
+        platform:
+          - al2022
+          - al2
+          - centos7
+          - centos8
+          - debian-bullseye
+          - debian-buster
+          - redhat8
+          - redhat9
+          - suse15.2
+          - suse15.3
+          - suse15.4
+          - ubuntu1604
+          - ubuntu1804
+          - ubuntu2004
+          - ubuntu2204
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: Molecule tests
-        uses: ./
-        with:
-          repo_base_url: 'http://nr-downloads-ohai-staging.s3-website-us-east-1.amazonaws.com/infrastructure_agent'
-          package_name: 'newrelic-infra'
-          package_version: '1.36.0'
-          gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
-          platforms: "al2,al2022,centos7,centos8,debian-bullseye,debian-buster,redhat8,redhat9,suse15.2,suse15.3,suse15.4,ubuntu1604,ubuntu1804,ubuntu2004,ubuntu2204"
+      - name: Configure Molecule and Ansible
+        shell: bash
+        run: |
+          sudo pipx uninstall ansible-core
+          sudo pip3 install molecule[docker]==3.6.0
+          sudo pip3 install 'rich>=10.0.0,<11.0.0'
+          sudo pip3 install ansible-lint[community]==5.3.2
+
+      - name: Run molecule testing scenario
+        shell: bash
+        env:
+          REPO_BASE_URL: 'http://nr-downloads-ohai-staging.s3-website-us-east-1.amazonaws.com/infrastructure_agent'
+          PACKAGE_NAME: 'newrelic-infra'
+          PACKAGE_VERSION: '1.36.0'
+          GPG_KEY: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
+        run: "cd ${GITHUB_ACTION_PATH} && molecule test -s testing --platform-name=${{ matrix.platform }}"
