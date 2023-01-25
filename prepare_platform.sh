@@ -1,212 +1,92 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-PLATFORMS=$1
 
+# So that when a command fails, bash exits.
+set -o errexit
+
+# This will make the script fail, when accessing an unset variable.
+set -o nounset
+
+# the return value of a pipeline is the value of the last (rightmost) command
+# to exit with a non-zero status, or zero if all commands in the pipeline exit
+# successfully.
+set -o pipefail
+
+# This helps in debugging your scripts. TRACE=1 ./script.sh
+if [[ "${TRACE-0}" == "1" ]]; then set -o xtrace; fi
+
+
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./script.sh arg-one arg-two
+This is an awesome bash script to make your life better.
+'
+    exit
+fi
+
+set_header() {
 echo "
 ---
 dependency:
   name: galaxy
 driver:
   name: docker
-platforms:" > "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
+platforms:" > $1
+}
 
+set_platforms_config() {
+    local PLATFORMS=$1
+    local FILE_PATH=$2
+    for PLATFORM in ${PLATFORMS//,/ }
+    do
+        echo "  - name: ${PLATFORM}
+    image: ghcr.io/newrelic/pkg-installation-testing-action-${PLATFORM}:latest" >> ${FILE_PATH}
 
-# this will collide with al-2022 🤔
-# if [[ "$PLATFORMS" == *"al-2"* ]]; then
-# echo "
-#   - name: al-2
-#     image: al-2
-#     dockerfile: al2.Dockerfile
-#     privileged: true
-#     environment: { container: docker }
-#     groups:
-#       - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-# fi
+        if [[ $PLATFORM =~ "debian" || $PLATFORM =~ "ubuntu" ]]; then
+            echo "    command: \"/sbin/init\"" >> ${FILE_PATH}
+        fi
 
-if [[ "$PLATFORMS" == *"al-2022"* ]]; then
-echo "
-  - name: al-2022
-    image: ghcr.io/newrelic/pkg-installation-testing-action-al2022:latest
-    privileged: true
+        echo "    privileged: true
     environment: { container: docker }
     groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
+      - testing_hosts_linux" >> ${FILE_PATH}
+    done
+}
 
-if [[ "$PLATFORMS" == *"centos-7"* ]]; then
-echo "
-  - name: centos-7
-    image: ghcr.io/newrelic/pkg-installation-testing-action-centos7:latest
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"centos-8"* ]]; then
-echo "
-  - name: centos-8
-    image: ghcr.io/newrelic/pkg-installation-testing-action-centos8:latest
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"debian-bullseye"* ]]; then
-echo "
-  - name: debian-bullseye
-    image: ghcr.io/newrelic/pkg-installation-testing-action-debian-bullseye:latest
-    command: \"/sbin/init\"
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"debian-buster"* ]]; then
-echo "
-  - name: debian-buster
-    image: ghcr.io/newrelic/pkg-installation-testing-action-debian-buster:latest
-    command: \"/sbin/init\"
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"redhat-8"* ]]; then
-echo "
-  - name: redhat-8
-    image: ghcr.io/newrelic/pkg-installation-testing-action-redhat8:latest
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"redhat-9"* ]]; then
-echo "
-  - name: redhat-9
-    image: ghcr.io/newrelic/pkg-installation-testing-action-redhat9:latest
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"suse-15.2"* ]]; then
-echo "
-  - name: suse15.2
-    image: ghcr.io/newrelic/pkg-installation-testing-action-suse15.2:latest
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"suse-15.3"* ]]; then
-echo "
-  - name: suse15.3
-    image: ghcr.io/newrelic/pkg-installation-testing-action-suse15.3:latest
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"suse-15.4"* ]]; then
-echo "
-  - name: suse15.4
-    image: ghcr.io/newrelic/pkg-installation-testing-action-suse15.4:latest
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-
-if [[ "$PLATFORMS" == *"ubuntu-1604"* ]]; then
-echo "
-  - name: ubuntu-1604
-    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu1604:latest
-    command: \"/sbin/init\"
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"ubuntu-1804"* ]]; then
-echo "
-  - name: ubuntu-1804
-    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu1804:latest
-    command: \"/sbin/init\"
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"ubuntu-2004"* ]]; then
-echo "
-  - name: ubuntu-2004
-    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu2004:latest
-    command: \"/sbin/init\"
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
-
-if [[ "$PLATFORMS" == *"ubuntu-2204"* ]]; then
-echo "
-  - name: ubuntu-2204
-    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu2204:latest
-    command: \"/sbin/init\"
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
+set_footer() {
+    local PLATFORMS=$1
+    local FILE_PATH=$2
 
 echo "
 provisioner:
   name: ansible
   inventory:
-    host_vars:
-      al-2:
-        ansible_python_interpreter: python
-      al-2022:
-        ansible_python_interpreter: python3
-      centos-7:
-        ansible_python_interpreter: python
-      centos-8:
-        ansible_python_interpreter: python3
-      debian-bullseye:
-        ansible_python_interpreter: python3
-      debian-buster:
-        ansible_python_interpreter: python3
-      redhat-8:
-        ansible_python_interpreter: python3
-      redhat-9:
-        ansible_python_interpreter: python3
-      suse15.2:
-        ansible_python_interpreter: python3
-      suse15.3:
-        ansible_python_interpreter: python3
-      suse15.4:
-        ansible_python_interpreter: python3
-      ubuntu-1604:
-        ansible_python_interpreter: python3
-      ubuntu-1804:
-        ansible_python_interpreter: python3
-      ubuntu-2004:
-        ansible_python_interpreter: python3
-      ubuntu-2204:
-        ansible_python_interpreter: python3
-  env:
+    host_vars:" >> $FILE_PATH
+
+    for PLATFORM in ${PLATFORMS//,/ }
+    do
+        echo "      ${PLATFORM}:" >> ${FILE_PATH}
+        if [[ $PLATFORM == "al-2" || $PLATFORM == "centos7" ]]; then
+            echo "        ansible_python_interpreter: python" >> ${FILE_PATH}
+        else
+            echo "        ansible_python_interpreter: python3" >> ${FILE_PATH}
+        fi
+    done
+
+echo "  env:
     ANSIBLE_ROLES_PATH: \"../../roles\"
 verifier:
   name: ansible
-" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
+" >> $FILE_PATH
+}
+
+
+main() {
+    local MOLECULE_FILE_PATH="${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
+    local PLATFORMS=$1
+    set_header $MOLECULE_FILE_PATH
+    set_platforms_config $PLATFORMS $MOLECULE_FILE_PATH
+    set_footer $PLATFORMS $MOLECULE_FILE_PATH
+}
+
+main "$@"
