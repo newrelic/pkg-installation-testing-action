@@ -3,14 +3,19 @@ description: 'Test that given package can be installed from a given repo'
 inputs:
   repo_base_url:
     description: 'base url to the rpm/yum/apt repository of NR'
+    required: true
   package_name:
     description: 'name of a package'
+    required: true
   package_version:
     description: 'version of a package that should be installed'
+    required: true
   gpg_key:
     description: 'gpg key to verify package signatures'
+    required: true
   platforms:
     description: 'comma separated list of platforms with version we want to run test for'
+    required: true
 
 runs:
   using: "composite"
