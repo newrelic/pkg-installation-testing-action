@@ -90,7 +90,7 @@ verifier:
 
 
 main() {
-    local MOLECULE_FILE_PATH="${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
+    local MOLECULE_FILE_PATH="${GITHUB_ACTION_PATH:-.}/molecule/default/molecule.yml"
     local PLATFORMS=$1
     set_header $MOLECULE_FILE_PATH
     set_platforms_config $PLATFORMS $MOLECULE_FILE_PATH
