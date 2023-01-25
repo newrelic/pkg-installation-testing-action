@@ -6,6 +6,8 @@ jobs:
   molecule-packaging-tests:
     name: Launch molecule tests with infra-agent package
     runs-on: ubuntu-20.04
+    env:
+      TESTING: 'true'
     steps:
       - uses: actions/checkout@v2
 

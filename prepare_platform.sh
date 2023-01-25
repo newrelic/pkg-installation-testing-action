@@ -37,10 +37,18 @@ platforms:" > $1
 set_platforms_config() {
     local PLATFORMS=$1
     local FILE_PATH=$2
+    local IS_TESTING=${TESTING:-}
+
     for PLATFORM in ${PLATFORMS//,/ }
     do
-        echo "  - name: ${PLATFORM}
-    image: ghcr.io/newrelic/pkg-installation-testing-action-${PLATFORM}:latest" >> ${FILE_PATH}
+        echo "  - name: ${PLATFORM}" >> ${FILE_PATH}
+
+        if [[ ! -z "${IS_TESTING}" ]]; then
+            echo "    image: ${PLATFORM}" >> ${FILE_PATH}
+            echo "    dockerfile: ./dockerfiles/${PLATFORM}" >> ${FILE_PATH}
+        else
+            echo "    image: ghcr.io/newrelic/pkg-installation-testing-action-${PLATFORM}:latest" >> ${FILE_PATH}
+        fi
 
         if [[ $PLATFORM =~ "debian" || $PLATFORM =~ "ubuntu" ]]; then
             echo "    command: \"/sbin/init\"" >> ${FILE_PATH}
@@ -66,7 +74,7 @@ provisioner:
     for PLATFORM in ${PLATFORMS//,/ }
     do
         echo "      ${PLATFORM}:" >> ${FILE_PATH}
-        if [[ $PLATFORM == "al-2" || $PLATFORM == "centos7" ]]; then
+        if [[ $PLATFORM == "al2" || $PLATFORM == "centos7" ]]; then
             echo "        ansible_python_interpreter: python" >> ${FILE_PATH}
         else
             echo "        ansible_python_interpreter: python3" >> ${FILE_PATH}
