@@ -43,4 +43,4 @@ jobs:
           PACKAGE_NAME: 'newrelic-infra'
           PACKAGE_VERSION: '1.36.0'
           GPG_KEY: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
-        run: "echo ${GITHUB_ACTION_PATH} && echo $PWD && ls -al && molecule test --platform-name=${{ matrix.platform }}"
+        run: "molecule test --scenario-name testing --platform-name=${{ matrix.platform }}"

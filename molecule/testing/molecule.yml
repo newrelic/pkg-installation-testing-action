@@ -156,3 +156,12 @@ provisioner:
 verifier:
   name: ansible
 
+scenario:
+  name: testing
+  test_sequence:
+    - dependency
+    - create
+    - prepare
+    - converge
+    - cleanup
+    - destroy
