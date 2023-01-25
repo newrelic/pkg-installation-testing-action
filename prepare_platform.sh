@@ -12,22 +12,21 @@ platforms:" > "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
 
 
 # this will collide with al-2022 🤔
-if [[ "$PLATFORMS" == *"al-2"* ]]; then
-echo "
-  - name: al-2
-    image: al-2
-    dockerfile: al2.Dockerfile
-    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
-fi
+# if [[ "$PLATFORMS" == *"al-2"* ]]; then
+# echo "
+#   - name: al-2
+#     image: al-2
+#     dockerfile: al2.Dockerfile
+#     privileged: true
+#     environment: { container: docker }
+#     groups:
+#       - testing_hosts_linux" >> "${GITHUB_ACTION_PATH}/molecule/default/molecule.yml"
+# fi
 
 if [[ "$PLATFORMS" == *"al-2022"* ]]; then
 echo "
   - name: al-2022
-    image: al-2022
-    dockerfile: al2022.Dockerfile
+    image: ghcr.io/newrelic/pkg-installation-testing-action-al2022:latest
     privileged: true
     environment: { container: docker }
     groups:
