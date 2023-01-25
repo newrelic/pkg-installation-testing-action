@@ -1,7 +1,6 @@
 name: 🚀 🐳 Build and publish container images
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       branch:
