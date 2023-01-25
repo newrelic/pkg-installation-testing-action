@@ -1,0 +1,143 @@
+
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: al2
+    image: ghcr.io/newrelic/pkg-installation-testing-action-al2:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: al2022
+    image: ghcr.io/newrelic/pkg-installation-testing-action-al2022:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: centos7
+    image: ghcr.io/newrelic/pkg-installation-testing-action-centos7:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: centos8
+    image: ghcr.io/newrelic/pkg-installation-testing-action-centos8:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: debian-bullseye
+    image: ghcr.io/newrelic/pkg-installation-testing-action-debian-bullseye:latest
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: debian-buster
+    image: ghcr.io/newrelic/pkg-installation-testing-action-debian-buster:latest
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: redhat8
+    image: ghcr.io/newrelic/pkg-installation-testing-action-redhat8:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: redhat9
+    image: ghcr.io/newrelic/pkg-installation-testing-action-redhat9:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: suse15.2
+    image: ghcr.io/newrelic/pkg-installation-testing-action-suse15.2:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: suse15.3
+    image: ghcr.io/newrelic/pkg-installation-testing-action-suse15.3:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: suse15.4
+    image: ghcr.io/newrelic/pkg-installation-testing-action-suse15.4:latest
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu1604
+    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu1604:latest
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu1804
+    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu1804:latest
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu2004
+    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu2004:latest
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu2204
+    image: ghcr.io/newrelic/pkg-installation-testing-action-ubuntu2204:latest
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      al2:
+        ansible_python_interpreter: python
+      al2022:
+        ansible_python_interpreter: python3
+      centos7:
+        ansible_python_interpreter: python
+      centos8:
+        ansible_python_interpreter: python3
+      debian-bullseye:
+        ansible_python_interpreter: python3
+      debian-buster:
+        ansible_python_interpreter: python3
+      redhat8:
+        ansible_python_interpreter: python3
+      redhat9:
+        ansible_python_interpreter: python3
+      suse15.2:
+        ansible_python_interpreter: python3
+      suse15.3:
+        ansible_python_interpreter: python3
+      suse15.4:
+        ansible_python_interpreter: python3
+      ubuntu1604:
+        ansible_python_interpreter: python3
+      ubuntu1804:
+        ansible_python_interpreter: python3
+      ubuntu2004:
+        ansible_python_interpreter: python3
+      ubuntu2204:
+        ansible_python_interpreter: python3
+  env:
+    ANSIBLE_ROLES_PATH: "../../roles"
+verifier:
+  name: ansible
+

@@ -1,0 +1,158 @@
+
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: al2
+    image: al2
+    dockerfile: ./dockerfiles/al2
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: al2022
+    image: al2022
+    dockerfile: ./dockerfiles/al2022
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: centos7
+    image: centos7
+    dockerfile: ./dockerfiles/centos7
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: centos8
+    image: centos8
+    dockerfile: ./dockerfiles/centos8
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: debian-bullseye
+    image: debian-bullseye
+    dockerfile: ./dockerfiles/debian-bullseye
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: debian-buster
+    image: debian-buster
+    dockerfile: ./dockerfiles/debian-buster
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: redhat8
+    image: redhat8
+    dockerfile: ./dockerfiles/redhat8
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: redhat9
+    image: redhat9
+    dockerfile: ./dockerfiles/redhat9
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: suse15.2
+    image: suse15.2
+    dockerfile: ./dockerfiles/suse15.2
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: suse15.3
+    image: suse15.3
+    dockerfile: ./dockerfiles/suse15.3
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: suse15.4
+    image: suse15.4
+    dockerfile: ./dockerfiles/suse15.4
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu1604
+    image: ubuntu1604
+    dockerfile: ./dockerfiles/ubuntu1604
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu1804
+    image: ubuntu1804
+    dockerfile: ./dockerfiles/ubuntu1804
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu2004
+    image: ubuntu2004
+    dockerfile: ./dockerfiles/ubuntu2004
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+  - name: ubuntu2204
+    image: ubuntu2204
+    dockerfile: ./dockerfiles/ubuntu2204
+    command: "/sbin/init"
+    privileged: true
+    environment: { container: docker }
+    groups:
+      - testing_hosts_linux
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      al2:
+        ansible_python_interpreter: python
+      al2022:
+        ansible_python_interpreter: python3
+      centos7:
+        ansible_python_interpreter: python
+      centos8:
+        ansible_python_interpreter: python3
+      debian-bullseye:
+        ansible_python_interpreter: python3
+      debian-buster:
+        ansible_python_interpreter: python3
+      redhat8:
+        ansible_python_interpreter: python3
+      redhat9:
+        ansible_python_interpreter: python3
+      suse15.2:
+        ansible_python_interpreter: python3
+      suse15.3:
+        ansible_python_interpreter: python3
+      suse15.4:
+        ansible_python_interpreter: python3
+      ubuntu1604:
+        ansible_python_interpreter: python3
+      ubuntu1804:
+        ansible_python_interpreter: python3
+      ubuntu2004:
+        ansible_python_interpreter: python3
+      ubuntu2204:
+        ansible_python_interpreter: python3
+  env:
+    ANSIBLE_ROLES_PATH: "../../roles"
+verifier:
+  name: ansible
+
