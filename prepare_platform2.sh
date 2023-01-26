@@ -18,8 +18,8 @@ if [[ "${TRACE-0}" == "1" ]]; then set -o xtrace; fi
 
 
 if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
-    echo 'Usage: ./script.sh arg-one arg-two
-This is an awesome bash script to make your life better.
+    echo 'Usage: ./prepare_platform.sh "al2,al2022"
+This is a bash script to make generate a Molecule configutaion.
 '
     exit
 fi
@@ -40,11 +40,10 @@ set_platforms_config() {
         # set default platform values
         yq -i ".platforms += [{
             \"name\": \"$PLATFORM\",
-            \"privileged\": true,
-            \"environment\": \"{ container: docker }\"}]" $FILE_PATH
+            \"privileged\": true}]" $FILE_PATH
 
         if [[ ! -z "${IS_TESTING}" ]]; then
-            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfile/$PLATFORM\"}" $FILE_PATH
+            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
         else
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"ghcr.io/newrelic/pkg-installation-testing-action-$PLATFORM\"}" $FILE_PATH
         fi
@@ -56,9 +55,9 @@ set_platforms_config() {
 
         # set python interpreter groups
         if [[ $PLATFORM == "al2" || $PLATFORM == "centos7" ]]; then
-            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"group\": [\"python\"]}" $FILE_PATH
+            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"groups\": [\"python\"]}" $FILE_PATH
         else
-            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"group\": [\"python3\"]}" $FILE_PATH
+            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"groups\": [\"python3\"]}" $FILE_PATH
         fi
 
     done
@@ -81,7 +80,6 @@ main() {
     set_header $MOLECULE_FILE_PATH
     set_platforms_config $PLATFORMS $MOLECULE_FILE_PATH
     set_footer $PLATFORMS $MOLECULE_FILE_PATH
-    cat $MOLECULE_FILE_PATH
 }
 
 main "$@"
