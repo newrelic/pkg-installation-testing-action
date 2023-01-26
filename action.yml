@@ -29,7 +29,7 @@ runs:
         sudo pip3 install ansible-lint[community]==5.3.2
     - name: Prepare OS versions
       shell: bash
-      run: ${GITHUB_ACTION_PATH}/prepare_platform.sh ${{ inputs.platforms }}
+      run: ${GITHUB_ACTION_PATH}/prepare_platform2.sh ${{ inputs.platforms }}
     - name: Run molecule
       shell: bash
       env:
