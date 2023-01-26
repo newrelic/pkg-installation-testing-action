@@ -55,9 +55,7 @@ set_platforms_config() {
         fi
 
         echo "    privileged: true
-    environment: { container: docker }
-    groups:
-      - testing_hosts_linux" >> ${FILE_PATH}
+    environment: { container: docker }">> ${FILE_PATH}
     done
 }
 
