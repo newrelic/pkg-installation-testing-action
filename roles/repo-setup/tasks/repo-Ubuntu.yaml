@@ -1,10 +1,8 @@
 ---
 
-- name: Install infra APT key
+- name: Setup newrelic infra APT key
   apt_key:
     url: "{{ gpg_key }}"
-
-- debug: var=repo_endpoint
 
 - name: Setup APT repository
   apt_repository:

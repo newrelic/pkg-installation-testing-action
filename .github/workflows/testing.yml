@@ -14,7 +14,7 @@ jobs:
       - name: Molecule tests
         uses: ./
         with:
-          repo_base_url: 'http://nr-downloads-ohai-staging.s3-website-us-east-1.amazonaws.com/infrastructure_agent'
+          repo_base_url: 'https://download.newrelic.com/infrastructure_agent'
           package_name: 'newrelic-infra'
           package_version: '1.36.0'
           gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
