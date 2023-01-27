@@ -1,0 +1,66 @@
+name: 🚀 🐳 Build and publish container images
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch for container'
+        default: main
+        required: true
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        dockerfile:
+          - al2022
+          - al2
+          - centos7
+          - centos8
+          - debian-bullseye
+          - debian-buster
+          - redhat8
+          - redhat9
+          - suse15.2
+          - suse15.3
+          - suse15.4
+          - ubuntu1604
+          - ubuntu1804
+          - ubuntu2004
+          - ubuntu2204
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.dockerfile }}
+          flavor: |
+            latest=true
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          file: ./molecule/default/dockerfiles/${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            REF_ARG=${{ github.event.inputs.branch }}

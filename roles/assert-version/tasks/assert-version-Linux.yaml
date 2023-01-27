@@ -1,0 +1,11 @@
+---
+
+- name: Assert version
+  shell: "{{ package_name }} --version | grep {{ package_version }} || (>&2 {{ package_name }} --version && exit 1)"
+  register: check
+
+- name: Stdout from version grep
+  debug:
+    msg: "{{ check.stdout }}"
+
+...
