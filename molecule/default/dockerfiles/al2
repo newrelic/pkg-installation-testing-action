@@ -3,9 +3,11 @@ FROM amazonlinux:2
 # Run a system update so the system doesn't overwrite the fake systemctl later
 RUN yum -y update
 
-RUN yum -y install python3-dnf sudo
+RUN yum -y install python3-dnf sudo shadow-utils
 
 # Adding fake systemctl
-RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -o /usr/local/bin/systemctl
+RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /usr/local/bin/systemctl
+
+RUN chmod +x /usr/local/bin/systemctl
 
 CMD ["/usr/local/bin/systemctl"]
