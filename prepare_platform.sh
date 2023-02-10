@@ -42,7 +42,7 @@ check_platforms() {
 
 
 set_header() {
-    yq -i '.dependency = {"name": "galaxy"}' $1
+    yq -i '.dependency = {"name": "galaxy", "options": {"requirements-file": "requirements.yaml"}}' $1
     yq -i '.driver = {"name": "docker"}' $1
 }
 
