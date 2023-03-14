@@ -3,4 +3,3 @@
 # TODO: Remove reference to branch NR-83102_reuse_agent_roles after being merged to main
 collections:
   - name: git+https://github.com/newrelic-experimental/caos-ansible-roles.git#/caos.ansible_roles/
-    version: NR-83102_reuse_agent_roles
