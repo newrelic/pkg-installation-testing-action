@@ -23,6 +23,7 @@ Github action that tests the correct installation of a given package and version
  - centos8
  - debian-bullseye
  - debian-buster
+ - debian-bookworm
  - redhat8
  - redhat9
  - suse15.2
