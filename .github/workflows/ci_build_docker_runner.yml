@@ -20,13 +20,13 @@ jobs:
     strategy:
       matrix:
         dockerfile:
-          - al2022
           - al2023
           - al2
           - centos7
           - centos8
           - debian-bullseye
           - debian-buster
+          - debian-bookworm
           - redhat8
           - redhat9
           - suse15.2
