@@ -17,12 +17,12 @@ Github action that tests the correct installation of a given package and version
 ## Available platforms
 
  - al2
- - al2022
  - al2023
  - centos7
  - centos8
  - debian-bullseye
  - debian-buster
+ - debian-bookworm
  - redhat8
  - redhat9
  - suse15.2

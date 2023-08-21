@@ -18,13 +18,13 @@ if [[ "${TRACE-0}" == "1" ]]; then set -o xtrace; fi
 
 
 if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
-    echo 'Usage: ./prepare_platform.sh "al2,al2022"
+    echo 'Usage: ./prepare_platform.sh "al2,al2023"
 This is a bash script to make generate a Molecule configutaion.
 '
     exit
 fi
 
-available_platforms=("al2" "al2022" "al2023" "centos7" "centos8" "debian-bullseye" "debian-buster" "redhat8" "redhat9" "suse15.2" "suse15.3" "suse15.4" "ubuntu1604" "ubuntu1804" "ubuntu2004" "ubuntu2204")
+available_platforms=("al2" "al2023" "centos7" "centos8" "debian-bullseye" "debian-buster" "debian-bookworm" "redhat8" "redhat9" "suse15.2" "suse15.3" "suse15.4" "ubuntu1604" "ubuntu1804" "ubuntu2004" "ubuntu2204")
 
 # check_platforms verifies that the provided platforms are available
 check_platforms() {
