@@ -1,1 +1,4 @@
-molecule/default/molecule.yml
+# having the molecule.yml in .gitignore prevents the molecule converge to run.
+# https://github.com/ansible/molecule/issues/4117
+
+#molecule/default/molecule.yml
