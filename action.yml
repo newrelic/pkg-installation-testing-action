@@ -23,8 +23,7 @@ runs:
     - name: Configure Molecule and Ansible
       shell: bash
       run: |
-        python3 -m pip install molecule ansible ansible-core
-        python3 -m pip install "molecule-plugins[docker]"
+        python3 -m pip install molecule==24.2.1 ansible==9.5.1 ansible-core==2.16.6 "molecule-plugins[docker]==23.5.3"
     - name: Prepare OS versions
       shell: bash
       run: ${GITHUB_ACTION_PATH}/prepare_platform.sh ${{ inputs.platforms }}
