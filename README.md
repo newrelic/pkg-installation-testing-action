@@ -33,6 +33,7 @@ Github action that tests the correct installation of a given package and version
  - ubuntu1804
  - ubuntu2004
  - ubuntu2204
+ - ubuntu2404
 
 ## Example usage
 
@@ -44,7 +45,7 @@ on:
 jobs:
   molecule-packaging-tests:
     name: Launch molecule tests with infra-agent package
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
 
