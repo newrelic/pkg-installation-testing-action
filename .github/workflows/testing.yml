@@ -6,8 +6,13 @@ jobs:
   molecule-packaging-tests:
     name: Launch molecule tests with infra-agent package
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # test building and using pre-build containers.
+        build_docker: ["true",""]
     env:
-      TESTING: 'true'
+      TESTING: ${{ matrix.build_docker}}
     steps:
       - uses: actions/checkout@v2
 
