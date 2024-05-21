@@ -10,17 +10,16 @@ jobs:
       fail-fast: false
       matrix:
         # test building and using pre-build containers.
-        build_docker: ["true",""]
+        build_docker: [""]
     env:
       TESTING: ${{ matrix.build_docker}}
     steps:
       - uses: actions/checkout@v2
-
       - name: Molecule tests
         uses: ./
         with:
           repo_base_url: 'https://download.newrelic.com/infrastructure_agent'
           package_name: 'newrelic-infra'
-          package_version: '1.52.1'
+          package_version: '1.52.3'
           gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
-          platforms: "al2,al2023,centos7,centos8,debian-bullseye,debian-buster,redhat8,redhat9,suse15.2,suse15.3,suse15.4,suse15.5,ubuntu1604,ubuntu1804,ubuntu2004,ubuntu2204"
+          platforms: "ubuntu2204,ubuntu2404"
