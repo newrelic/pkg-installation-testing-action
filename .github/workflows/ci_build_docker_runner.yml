@@ -1,6 +1,11 @@
 name: 🚀 🐳 Build and publish container images
 
 on:
+  push:
+    branches: 
+      - main
+    paths: 
+      - molecule/default/dockerfiles/*
   workflow_dispatch:
     inputs:
       branch:
