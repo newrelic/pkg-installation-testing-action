@@ -23,3 +23,21 @@ jobs:
           package_version: '1.52.3'
           gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
           platforms: "al2,al2023,centos7,centos8,debian-bullseye,debian-buster,redhat8,redhat9,suse15.2,suse15.3,suse15.4,suse15.5,suse15.6,ubuntu1604,ubuntu1804,ubuntu2004,ubuntu2204,ubuntu2404"
+
+# TEST suse15.6
+  molecule-packaging-tests-15-6:
+    name: Launch molecule tests with infra-agent package (SLES 15.6)
+    runs-on: ubuntu-latest
+    env:
+      TESTING: 'true'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Molecule tests
+        uses: ./
+        with:
+          repo_base_url: 'http://nr-downloads-ohai-staging.s3-website-us-east-1.amazonaws.com/davsanchez-sles15-6'
+          package_name: 'newrelic-infra'
+          package_version: '1.56.1'
+          gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
+          platforms: "suse15.5,suse15.6"
