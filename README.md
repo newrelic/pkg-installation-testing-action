@@ -29,6 +29,7 @@ Github action that tests the correct installation of a given package and version
  - suse15.3
  - suse15.4
  - suse15.5
+ - suse15.6
  - ubuntu1604
  - ubuntu1804
  - ubuntu2004
