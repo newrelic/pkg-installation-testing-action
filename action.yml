@@ -16,6 +16,10 @@ inputs:
   platforms:
     description: 'comma separated list of platforms with version we want to run test for'
     required: true
+  exec_name:
+    description: 'name of the binary that should be executed after installation'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -34,6 +38,7 @@ runs:
         PACKAGE_NAME: ${{ inputs.package_name }}
         PACKAGE_VERSION: ${{ inputs.package_version }}
         GPG_KEY: ${{ inputs.gpg_key }}
+        EXEC_NAME: ${{ inputs.exec_name != '' && inputs.exec_name || inputs.package_name }}
       run: "cd ${GITHUB_ACTION_PATH} && molecule converge"
     - name: Teardown
       shell: bash

@@ -8,6 +8,7 @@
         package_version: "{{ lookup('env', 'PACKAGE_VERSION') }}"
         package_name: "{{ lookup('env', 'PACKAGE_NAME') }}"
         gpg_key: "{{ lookup('env', 'GPG_KEY') }}"
+        exec_name: "{{ lookup('env', 'EXEC_NAME') }}"
 
       block:
         - name: Repo setup
@@ -26,6 +27,6 @@
             name: caos.ansible_roles.assert_version
           vars:
             target_versions:
-              - exec: "{{ package_name }} --version"
+              - exec: "{{ exec_name }} --version"
                 version: "{{ package_version }}"
 
