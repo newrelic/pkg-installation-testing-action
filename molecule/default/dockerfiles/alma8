@@ -1,4 +1,4 @@
-FROM almalinux:9
+FROM almalinux:8
 
 # Run a system update to ensure the latest packages are installed
 RUN dnf -y update
