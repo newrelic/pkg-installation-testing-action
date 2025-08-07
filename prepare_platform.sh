@@ -62,7 +62,8 @@ set_platforms_config() {
         if [[ ! -z "${IS_TESTING}" ]]; then
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
         else
-            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"ghcr.io/newrelic/pkg-installation-testing-action-$PLATFORM\"}" $FILE_PATH
+            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
+            #yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"ghcr.io/newrelic/pkg-installation-testing-action-$PLATFORM\"}" $FILE_PATH
 
             # Prevent molecule to install extra tools in the pre-build image
             # https://ansible.readthedocs.io/projects/molecule/guides/custom-image/
