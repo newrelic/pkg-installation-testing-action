@@ -1,10 +1,33 @@
 FROM ubuntu:22.04
 
-RUN apt-get update \
-    && apt-get install -y init gpg ca-certificates sudo curl openjdk-11-jre-headless \
-    && apt-get clean all
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Adding fake systemctl
-RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -o /usr/local/bin/systemctl
+# Update package lists and install required packages including Java
+RUN apt-get update && apt-get install -y \
+    init \
+    gpg \
+    ca-certificates \
+    sudo \
+    curl \
+    python3 \
+    python3-pip \
+    python3-setuptools \
+    openjdk-11-jre-headless \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Verify Java installation
+RUN java -version
+
+# Install fake systemctl
+RUN curl -fsSL https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /usr/local/bin/systemctl \
+    && chmod +x /usr/local/bin/systemctl
+
+# Set up Python symlink for compatibility
+RUN ln -sf /usr/bin/python3 /usr/bin/python
+
+# Reset environment
+ENV DEBIAN_FRONTEND=
 
 CMD ["/usr/local/bin/systemctl"]

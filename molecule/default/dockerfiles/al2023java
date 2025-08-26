@@ -1,14 +1,26 @@
-# Amazon Linux 2023
 FROM amazonlinux:2023
 
-# Run a system update so the system doesn't overwrite the fake systemctl later
-RUN yum -y update
+# Install system updates first
+RUN dnf -y update && dnf -y clean all
 
-RUN yum -y install python3 sudo shadow-utils java-11-amazon-corretto-headless
+# Install required packages including Java
+RUN dnf -y install \
+    python3 \
+    python3-pip \
+    sudo \
+    shadow-utils \
+    curl \
+    java-11-amazon-corretto-headless \
+    && dnf -y clean all
 
-# Adding fake systemctl
-RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /usr/local/bin/systemctl
+# Verify Java installation
+RUN java -version
 
-RUN chmod +x /usr/local/bin/systemctl
+# Install fake systemctl
+RUN curl -fsSL https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /usr/local/bin/systemctl \
+    && chmod +x /usr/local/bin/systemctl
+
+# Set up Python symlink for compatibility
+RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 CMD ["/usr/local/bin/systemctl"]
