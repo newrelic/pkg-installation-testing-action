@@ -29,6 +29,8 @@ jobs:
           - al2
           - centos7
           - centos8
+          - alma8
+          - alma9
           - debian-bullseye
           - debian-buster
           - debian-bookworm
