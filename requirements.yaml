@@ -2,5 +2,4 @@
 # ansible-galaxy -v  collection install git+https://github.com/newrelic-experimental/caos-ansible-roles.git#/caos.ansible_roles/,NR-83102_reuse_agent_roles
 # TODO: Remove reference to branch NR-83102_reuse_agent_roles after being merged to main
 collections:
-  - name: git+https://github.com/newrelic-experimental/caos-ansible-roles.git#/caos.ansible_roles/
-    version: suse15.7
+  - name: git+https://github.com/mbolla22/caos-ansible-roles.git#/caos.ansible_roles/
