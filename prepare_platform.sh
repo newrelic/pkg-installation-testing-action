@@ -24,7 +24,7 @@ This is a bash script to make generate a Molecule configutaion.
     exit
 fi
 
-available_platforms=("al2" "al2023" "centos7" "centos8" "debian-bullseye" "debian-buster" "debian-bookworm" "redhat8" "redhat9" "suse15.2" "suse15.3" "suse15.4" "suse15.5" "suse15.6" "ubuntu1604" "ubuntu1804" "ubuntu2004" "ubuntu2204" "ubuntu2404")
+available_platforms=("al2" "al2023" "centos7" "centos8" "debian-bullseye" "debian-buster" "debian-bookworm" "debian-trixie" "redhat8" "redhat9" "suse15.2" "suse15.3" "suse15.4" "suse15.5" "suse15.6" "ubuntu1604" "ubuntu1804" "ubuntu2004" "ubuntu2204" "ubuntu2404")
 
 # check_platforms verifies that the provided platforms are available
 check_platforms() {
