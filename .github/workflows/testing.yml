@@ -18,7 +18,7 @@ jobs:
       - name: Molecule tests
         uses: ./
         with:
-          repo_base_url: 'https://download.newrelic.com/infrastructure_agent'
+          repo_base_url: 'http://nr-downloads-ohai-staging.s3-website-us-east-1.amazonaws.com/testing-pre-releases/abhishu-debian13/infrastructure_agent'
           package_name: 'newrelic-infra'
           package_version: '1.69.0'
           gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
