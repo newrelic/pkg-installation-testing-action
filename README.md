@@ -30,6 +30,7 @@ Github action that tests the correct installation of a given package and version
  - suse15.4
  - suse15.5
  - suse15.6
+ - suse15.7
  - ubuntu1604
  - ubuntu1804
  - ubuntu2004
@@ -55,9 +56,9 @@ jobs:
         with:
           repo_base_url: 'http://nr-downloads-ohai-staging.s3-website-us-east-1.amazonaws.com/infrastructure_agent'
           package_name: 'newrelic-infra'
-          package_version: '1.36.0'
+          package_version: '1.68.0'
           gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
-          platforms: "al2,al2022,centos7,centos8,debian-bullseye,debian-buster,redhat8,redhat9,suse15.2,suse15.3,suse15.4,suse15.5,ubuntu1604,ubuntu1804,ubuntu2004,ubuntu2204"
+          platforms: "al2,al2022,centos7,centos8,debian-bullseye,debian-buster,redhat8,redhat9,suse15.2,suse15.3,suse15.4,suse15.5,suse15.6,suse15.7,ubuntu1604,ubuntu1804,ubuntu2004,ubuntu2204"
 ```
 
 
