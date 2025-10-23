@@ -30,7 +30,6 @@ jobs:
           - centos7
           - centos8
           - debian-bullseye
-          - debian-buster
           - debian-bookworm
           - debian-trixie
           - redhat8
