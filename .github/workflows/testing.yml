@@ -18,8 +18,8 @@ jobs:
       - name: Molecule tests
         uses: ./
         with:
-          repo_base_url: 'https://download.newrelic.com/infrastructure_agent'
+          repo_base_url: 'http://nr-downloads-ohai-staging.s3-website-us-east-1.amazonaws.com/testing-pre-releases/madhu_rhel10/infrastructure_agent'
           package_name: 'newrelic-infra'
-          package_version: '1.69.0'
+          package_version: '1.71.4'
           gpg_key: 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg'
-          platforms: "al2,al2023,centos7,centos8,debian-bullseye,debian-trixie,redhat8,redhat9,redhat10,suse15.2,suse15.3,suse15.4,suse15.5,suse15.6,suse15.7,ubuntu1604,ubuntu1804,ubuntu2004,ubuntu2204,ubuntu2404"
+          platforms: "al2023,centos7,centos8,debian-bullseye,debian-trixie,redhat8,redhat9,redhat10,suse15.2,suse15.3,suse15.4,suse15.5,suse15.6,suse15.7,ubuntu1604,ubuntu1804,ubuntu2004,ubuntu2204,ubuntu2404"
