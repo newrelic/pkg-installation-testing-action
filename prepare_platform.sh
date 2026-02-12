@@ -24,7 +24,7 @@ This is a bash script to make generate a Molecule configutaion.
     exit
 fi
 
-available_platforms=("al2" "al2023" "centos7" "centos8" "debian-bullseye" "debian-bookworm" "debian-trixie" "redhat8" "redhat9" "redhat10" "suse15.2" "suse15.3" "suse15.4" "suse15.5" "suse15.6" "suse15.7" "ubuntu1604" "ubuntu1804" "ubuntu2004" "ubuntu2204" "ubuntu2404")
+available_platforms=("al2" "al2023" "centos7" "centos8" "debian-bullseye" "debian-bookworm" "debian-trixie" "redhat8" "redhat9" "redhat10" "suse15.2" "suse15.3" "suse15.4" "suse15.5" "suse15.6" "suse15.7"  "ubuntu1804" "ubuntu2004" "ubuntu2204" "ubuntu2404")
 
 # check_platforms verifies that the provided platforms are available
 check_platforms() {
@@ -68,7 +68,7 @@ set_platforms_config() {
             # https://ansible.readthedocs.io/projects/molecule/guides/custom-image/
             # ubuntu16 python 2 installation was being corrupted by this behaivor.
             if [[ $PLATFORM == "ubuntu1604" ]]; then
-                    yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"pre_build_image\": true, \"image\": \"ghcr.io/newrelic/pkg-installation-testing-action-ubuntu1604:debian_buster_repo\"}" $FILE_PATH
+                yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"pre_build_image\": true}" $FILE_PATH
             fi
         fi
 
