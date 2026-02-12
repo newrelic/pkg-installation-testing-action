@@ -1,19 +1,12 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 RUN apt-get update \
-    && apt-get install -y software-properties-common \
-    && add-apt-repository -y ppa:deadsnakes/ppa \
-    && apt-get update \
-    && apt-get install -y init ca-certificates sudo curl apt-transport-https python3.6 \
-    && ln -sf /usr/bin/python3.6 /usr/bin/python3 \
-    && ln -sf /usr/bin/python3.6 /usr/bin/python \
+    && apt-get install -y init ca-certificates sudo curl apt-transport-https python3 \
+    && ln -sf /usr/bin/python3 /usr/bin/python \
     && apt-get clean all
 
 # Adding fake systemctl (requires Python 3.6+)
 RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl
-
-# Ensure the script uses python3.6
-RUN sed -i '1s|.*|#!/usr/bin/python3.6|' /bin/systemctl
 
 RUN chmod +x /bin/systemctl
 
