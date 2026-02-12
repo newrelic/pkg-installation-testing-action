@@ -59,17 +59,16 @@ set_platforms_config() {
             \"name\": \"$PLATFORM\",
             \"privileged\": true}]" $FILE_PATH
 
-        if [[ ! -z "${IS_TESTING}" ]]; then
+        # ubuntu1604 needs to build from Dockerfile to use Python 3.6
+        if [[ $PLATFORM == "ubuntu1604" ]]; then
+            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
+        elif [[ ! -z "${IS_TESTING}" ]]; then
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
         else
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"ghcr.io/newrelic/pkg-installation-testing-action-$PLATFORM\"}" $FILE_PATH
 
             # Prevent molecule to install extra tools in the pre-build image
             # https://ansible.readthedocs.io/projects/molecule/guides/custom-image/
-            # ubuntu16 python 2 installation was being corrupted by this behaivor.
-            if [[ $PLATFORM == "ubuntu1604" ]]; then
-                yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"pre_build_image\": true}" $FILE_PATH
-            fi
         fi
 
         # debian based distributions need to set up the init command
@@ -78,7 +77,7 @@ set_platforms_config() {
         fi
 
         # set python interpreter groups
-        if [[ $PLATFORM == "al2" || $PLATFORM == "centos7" || $PLATFORM == "ubuntu1604" ]]; then
+        if [[ $PLATFORM == "al2" || $PLATFORM == "centos7" ]]; then
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"groups\": [\"python\"]}" $FILE_PATH
         else
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"groups\": [\"python3\"]}" $FILE_PATH
