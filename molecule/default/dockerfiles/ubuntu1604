@@ -1,11 +1,14 @@
 FROM ubuntu:16.04
 
 RUN apt-get update \
-    && apt-get install -y init ca-certificates sudo curl apt-transport-https python-minimal\
+    && apt-get install -y init ca-certificates sudo curl apt-transport-https python3\
     && apt-get clean all
 
-# Adding fake systemctl
+# Adding fake systemctl (requires Python 3)
 RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl
+
+# Ensure the script uses python3
+RUN sed -i '1s|.*|#!/usr/bin/python3|' /bin/systemctl
 
 RUN chmod +x /bin/systemctl
 

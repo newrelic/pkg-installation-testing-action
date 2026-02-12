@@ -78,7 +78,7 @@ set_platforms_config() {
         fi
 
         # set python interpreter groups
-        if [[ $PLATFORM == "al2" || $PLATFORM == "centos7" || $PLATFORM == "ubuntu1604" ]]; then
+        if [[ $PLATFORM == "al2" || $PLATFORM == "centos7" ]]; then
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"groups\": [\"python\"]}" $FILE_PATH
         else
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"groups\": [\"python3\"]}" $FILE_PATH
