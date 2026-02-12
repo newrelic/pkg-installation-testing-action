@@ -10,4 +10,7 @@ RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
 
 RUN chmod +x /bin/systemctl
 
+# Set Python 3 as the default for Ansible
+ENV ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3
+
 CMD ["/bin/systemctl"]
