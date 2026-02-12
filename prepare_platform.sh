@@ -68,7 +68,7 @@ set_platforms_config() {
             # https://ansible.readthedocs.io/projects/molecule/guides/custom-image/
             # ubuntu16 python 2 installation was being corrupted by this behaivor.
             if [[ $PLATFORM == "ubuntu1604" ]]; then
-                yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"pre_build_image\": true}" $FILE_PATH
+                    yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"pre_build_image\": true, \"image\": \"ghcr.io/newrelic/pkg-installation-testing-action-ubuntu1604:debian_buster_repo\"}" $FILE_PATH
             fi
         fi
 
