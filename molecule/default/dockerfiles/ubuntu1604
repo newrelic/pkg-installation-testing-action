@@ -5,7 +5,7 @@ RUN apt-get update \
     && apt-get clean all
 
 # Download systemctl.py and remove Python 3 type annotation for compatibility
-RUN curl -fsSL https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -o /bin/systemctl \
+RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -o /bin/systemctl \
     && sed -i 's/__copyright__: str =/__copyright__ =/' /bin/systemctl
 
 RUN chmod +x /bin/systemctl
