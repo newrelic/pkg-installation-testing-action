@@ -66,10 +66,11 @@ set_platforms_config() {
 
             # Prevent molecule to install extra tools in the pre-build image
             # https://ansible.readthedocs.io/projects/molecule/guides/custom-image/
-            # ubuntu16 python 2 installation was being corrupted by this behaivor.
-            if [[ $PLATFORM == "ubuntu1604" ]]; then
-                yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"pre_build_image\": true}" $FILE_PATH
-            fi
+        fi
+
+        # ubuntu1604 needs to build from Dockerfile to use Python 3
+        if [[ $PLATFORM == "ubuntu1604" ]]; then
+            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
         fi
 
         # debian based distributions need to set up the init command
