@@ -1,10 +1,13 @@
 FROM ubuntu:16.04
 
 RUN apt-get update \
-    && apt-get install -y init gpg ca-certificates sudo curl \
+    && apt-get install -y init ca-certificates sudo curl apt-transport-https python3 \
     && apt-get clean all
 
-# Adding fake systemctl
-RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -o /usr/local/bin/systemctl
+# Download systemctl.py and remove Python 3 type annotation for compatibility
+RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -o /bin/systemctl
 
-CMD ["/usr/local/bin/systemctl"]
+
+RUN chmod +x /bin/systemctl
+
+CMD ["/bin/systemctl"]
