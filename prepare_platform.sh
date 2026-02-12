@@ -59,18 +59,16 @@ set_platforms_config() {
             \"name\": \"$PLATFORM\",
             \"privileged\": true}]" $FILE_PATH
 
-        if [[ ! -z "${IS_TESTING}" ]]; then
+        # ubuntu1604 needs to build from Dockerfile to use Python 3.6
+        if [[ $PLATFORM == "ubuntu1604" ]]; then
+            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
+        elif [[ ! -z "${IS_TESTING}" ]]; then
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"$PLATFORM\", \"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
         else
             yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"image\":\"ghcr.io/newrelic/pkg-installation-testing-action-$PLATFORM\"}" $FILE_PATH
 
             # Prevent molecule to install extra tools in the pre-build image
             # https://ansible.readthedocs.io/projects/molecule/guides/custom-image/
-        fi
-
-        # ubuntu1604 needs to build from Dockerfile to use Python 3
-        if [[ $PLATFORM == "ubuntu1604" ]]; then
-            yq -i ".platforms[] |= select(.name == \"$PLATFORM\") += {\"dockerfile\": \"./dockerfiles/$PLATFORM\"}" $FILE_PATH
         fi
 
         # debian based distributions need to set up the init command
