@@ -20,6 +20,10 @@ inputs:
     description: 'name of the binary that should be executed after installation'
     required: false
     default: ''
+  version_command:
+    description: 'command or flag used to check the installed version (e.g. "--version" or "version")'
+    required: false
+    default: '--version'
 
 runs:
   using: "composite"
@@ -39,6 +43,7 @@ runs:
         PACKAGE_VERSION: ${{ inputs.package_version }}
         GPG_KEY: ${{ inputs.gpg_key }}
         EXEC_NAME: ${{ inputs.exec_name != '' && inputs.exec_name || inputs.package_name }}
+        VERSION_COMMAND: ${{ inputs.version_command }}
       run: "cd ${GITHUB_ACTION_PATH} && molecule converge"
     - name: Teardown
       shell: bash
