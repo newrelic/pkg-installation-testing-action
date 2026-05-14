@@ -37,6 +37,7 @@ Github action that tests the correct installation of a given package and version
  - ubuntu2004
  - ubuntu2204
  - ubuntu2404
+ - ubuntu2604
 
 ## Example usage
 
