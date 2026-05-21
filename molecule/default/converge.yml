@@ -16,6 +16,15 @@
           include_role:
             name: caos.ansible_roles.nr_repo_setup
 
+        - name: Fix GPG key format for Ubuntu 26.04
+          shell: |
+            gpg --dearmor < /etc/apt/keyrings/newrelic-infra.gpg > /tmp/newrelic-infra-binary.gpg
+            mv /tmp/newrelic-infra-binary.gpg /etc/apt/keyrings/newrelic-infra.gpg
+            apt-get update
+          when:
+            - ansible_distribution == "Ubuntu"
+            - ansible_distribution_version == "26.04"
+
         - name: Install package
           include_role:
             name: caos.ansible_roles.package_install
