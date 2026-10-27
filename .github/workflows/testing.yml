@@ -2,6 +2,9 @@ name: 🧬 Testing pipeline
 on:
   push:
 
+permissions:
+  contents: read
+
 jobs:
   molecule-packaging-tests:
     name: Launch molecule tests with infra-agent package
