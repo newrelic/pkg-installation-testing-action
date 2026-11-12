@@ -1,5 +1,9 @@
 FROM debian:bullseye
 
+# Debian 11 is EOL and its packages were removed from deb.debian.org; use the archive.
+RUN printf 'deb http://archive.debian.org/debian bullseye main\ndeb http://archive.debian.org/debian-security bullseye-security main\n' > /etc/apt/sources.list \
+    && echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99archive
+
 RUN apt-get update \
     && apt-get install -y init gpg ca-certificates sudo curl python3 \
     && apt-get clean all
