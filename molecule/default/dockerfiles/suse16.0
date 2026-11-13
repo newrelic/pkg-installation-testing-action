@@ -10,4 +10,8 @@ RUN curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
 
 RUN chmod +x /usr/local/bin/systemctl
 
+# On SLES 16 /usr/local/bin is not in the PATH used by rpm scriptlets, so the
+# fake systemctl must also be reachable from /usr/bin 
+RUN ln -s /usr/local/bin/systemctl /usr/bin/systemctl
+
 CMD ["/usr/local/bin/systemctl"]
